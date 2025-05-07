@@ -1,0 +1,31 @@
+{
+  "name": "simutrade-be",
+  "version": "1.0.0",
+  "description": "SimuTrade AI Supply Chain Simulation Back End",
+  "license": "MIT",
+  "author": "SimuTrade Developers <dev@simutrade.app>",
+  "type": "commonjs",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js",
+    "dev": "nodemon app/index.js"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1",
+    "natural": "^8.0.1",
+    "nodemailer": "^6.10.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
