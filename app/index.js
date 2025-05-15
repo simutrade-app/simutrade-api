@@ -3,8 +3,10 @@ require('dotenv').config();
 const mongodb = require('./configs/database/mongodb/mongodb.client');
 mongodb.connectDB();
 
-const transformers = require('./utils/nlp/xenova/transformers');
-transformers.loadModel("Xenova/all-MiniLM-L6-v2");
+// const redisClient = require('./configs/cache/redis/redis.client').client;
+// redisClient.connect()
+//   .then(() => console.log('Connected to Redis'))
+//   .catch((err) => console.error('Failed to connect to Redis:', err));
 
 const app = require('./server');
 const PORT = process.env.PORT || 8080;

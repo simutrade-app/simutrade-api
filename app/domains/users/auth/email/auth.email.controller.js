@@ -6,6 +6,8 @@ const verifyJWT = require('../../../../utils/auth/jwt/verify');
 
 const mailsender = require('../../../../utils/mail/sender');
 
+const emailVerificationInterval = 5 * 60;
+
 const verify = async (req, res) => {
     try {
         const { email } = req.body;
@@ -22,22 +24,44 @@ const verify = async (req, res) => {
     
         if (getUser) {
             if (getUser.isEmailVerified) {
-                return res.status(400).json({
-                    status: 'error',
-                    message: process.env.DEBUG ? "Email already verified" : "Bad Request",
-                    data: {}
-                });
+                // return res.status(400).json({
+                //     status: 'error',
+                //     message: process.env.DEBUG ? "Email already verified" : "Bad Request",
+                //     data: {}
+                // });
+                if (getUser.isRegistered) {
+                    return res.status(400).json({
+                        status: 'error',
+                        message: process.env.DEBUG ? "Email already registered" : "Bad Request",
+                        data: {}
+                    });
+                } else {
+                    const currentTime = Math.floor(new Date().getTime() / 1000);
+                    const timeDiff = currentTime - getUser.lastEmailVerification;
+                    if (timeDiff <= emailVerificationInterval) {
+                        return res.status(400).json({
+                            status: 'error',
+                            message: process.env.DEBUG ? `Email verification already sent. Please wait another ${Math.floor((emailVerificationInterval - timeDiff) / 60)} minutes${(emailVerificationInterval - timeDiff) % 60 > 0 ? " and " + ((emailVerificationInterval - timeDiff) % 60).toString() + " seconds" : ""}.` : "Bad Request",
+                            data: {}
+                        });
+                    } else {
+                        getUser.isEmailVerified = false;
+                        getUser.lastEmailVerification = currentTime;
+                        getUser.save();
+                    }
+                }
             } else {
                 const currentTime = Math.floor(new Date().getTime() / 1000);
                 const timeDiff = currentTime - getUser.lastEmailVerification;
-                if (timeDiff <= 60 * 5) {
+                if (timeDiff <= emailVerificationInterval) {
                     return res.status(400).json({
                         status: 'error',
-                        message: process.env.DEBUG ? `Email verification already sent ${Math.floor(timeDiff / 60)} minutes${timeDiff % 60 > 0 ? " and " + (timeDiff % 60).toString() + " seconds" : ""} ago. Please wait some time` : "Bad Request",
+                        message: process.env.DEBUG ? `Email verification already sent. Please wait another ${Math.floor((emailVerificationInterval - timeDiff) / 60)} minutes${(emailVerificationInterval - timeDiff) % 60 > 0 ? " and " + ((emailVerificationInterval - timeDiff) % 60).toString() + " seconds" : ""}.` : "Bad Request",
                         data: {}
                     });
                 } else {
                     getUser.lastEmailVerification = currentTime;
+                    getUser.save();
                 }
             }
         } else {
