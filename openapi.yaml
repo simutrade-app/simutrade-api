@@ -377,6 +377,285 @@ paths:
                     example: jwt expired
                   data:
                     type: object
+  /service/rag-chat/create:
+    post:
+      tags:
+        - service/rag-chat
+      summary: Create a RAG-based chat
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  example: What are the major trade trends in 2023?
+      responses:
+        '200':
+          description: Successfully created chat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfuly create user chat
+                  data:
+                    type: object
+                    properties:
+                      query:
+                        type: string
+                        example: What are the major trade trends in 2023?
+                      response:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            videoMetadata:
+                              type: string
+                              nullable: true
+                              example: null
+                            thought:
+                              type: string
+                              nullable: true
+                              example: null
+                            inlineData:
+                              type: string
+                              nullable: true
+                              example: null
+                            codeExecutionResult:
+                              type: string
+                              nullable: true
+                              example: null
+                            executableCode:
+                              type: string
+                              nullable: true
+                              example: null
+                            fileData:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionCall:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionResponse:
+                              type: string
+                              nullable: true
+                              example: null
+                            text:
+                              type: string
+                              example: >
+                                Based on my augmented trade knowledge, here are some of the major trade trends observed in 2023:
+                                
+                                - Increased Trade in Used Goods: ...
+                      grounding_metadata:
+                        type: string
+                        nullable: true
+                        example: null
+                      context_used:
+                        type: array
+                        items:
+                          type: string
+                          example: >
+                            This trend is evident in the smartphone sector, with the 
+                            market for new smartphones falling by 3.2% in 2023. In contrast, International Data Corporation (IDC) . . .
+                      chatID:
+                        type: string
+                        example: 6825a3b873df27baac13fa00
+  /service/rag-chat/read:
+    get:
+      tags:
+        - service/rag-chat
+      summary: Read existing user RAG chats
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully retrieved user chats
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfuly read all user chat
+                  data:
+                    type: object
+                    properties:
+                      chatData:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            query:
+                              type: string
+                              example: What are the major trade trends in 2024?
+                            response:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  videoMetadata:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  thought:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  inlineData:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  codeExecutionResult:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  executableCode:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  fileData:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  functionCall:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  functionResponse:
+                                    type: string
+                                    nullable: true
+                                    example: null
+                                  text:
+                                    type: string
+                                    example: >
+                                      In 2024, major trade trends include shifts in trade and industrial policies due to the prioritization of domestic issues and climate commitments...
+                                  _id:
+                                    type: string
+                                    example: 6825a2bd8725dce9203daa37
+                            grounding_metadata:
+                              type: string
+                              nullable: true
+                              example: null
+                            context_used:
+                              type: array
+                              items:
+                                type: string
+                                example: >
+                                  This trend is evident in the smartphone sector, with the 
+                                  market for new smartphones falling by 3.2% in 2023. In contrast, International Data Corporation (IDC) . . .
+                            _id:
+                              type: string
+                              example: 6825a2bd8725dce9203daa36
+  /service/rag-chat/read/{id}:
+    get:
+      tags:
+        - service/rag-chat
+      summary: Get chat data by ID
+      description: Retrieve a specific user chat by its ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the chat to retrieve
+      responses:
+        '200':
+          description: Successfully retrieved chat by ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfully read user chat by ID
+                  data:
+                    type: object
+                    properties:
+                      query:
+                        type: string
+                        example: What are the major trade trends in 2024?
+                      response:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            videoMetadata:
+                              type: string
+                              nullable: true
+                              example: null
+                            thought:
+                              type: string
+                              nullable: true
+                              example: null
+                            inlineData:
+                              type: string
+                              nullable: true
+                              example: null
+                            codeExecutionResult:
+                              type: string
+                              nullable: true
+                              example: null
+                            executableCode:
+                              type: string
+                              nullable: true
+                              example: null
+                            fileData:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionCall:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionResponse:
+                              type: string
+                              nullable: true
+                              example: null
+                            text:
+                              type: string
+                              example: >
+                                In 2024, major trade trends include shifts in trade and industrial policies due to the prioritization of domestic issues and climate commitments...
+                            _id:
+                              type: string
+                              example: 6825a2bd8725dce9203daa37
+                      grounding_metadata:
+                        type: string
+                        nullable: true
+                        example: null
+                      context_used:
+                        type: array
+                        items:
+                          type: string
+                          example: >
+                            This trend is evident in the smartphone sector, with the 
+                            market for new smartphones falling by 3.2% in 2023. In contrast, International Data Corporation (IDC) . . .
+                      _id:
+                        type: string
+                        example: 6825a2bd8725dce9203daa36
 components:
   securitySchemes:
     bearerAuth:

@@ -1,4 +1,5 @@
 const User = require('../../../domains/users/entities/user.model').User;
+const Service = require('../../../domains/services/entities/services.model').Service;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const Strategy = new GoogleStrategy({
@@ -13,11 +14,15 @@ const Strategy = new GoogleStrategy({
             const newUser = new User({
                 email: profile.email,
                 auth: "google",
-                picture: profile.picture,
                 isEmailVerified: true,
                 isRegistered: true
             });
             await newUser.save();
+            
+            const newService = new Service({
+                email: profile.email
+            });
+            await newService.save();
         }
         return done(null, profile);
     } catch (err) {

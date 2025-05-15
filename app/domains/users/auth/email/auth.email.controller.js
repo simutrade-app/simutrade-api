@@ -1,4 +1,5 @@
 const User = require('../../entities/user.model').User;
+const Service = require('../../../services/entities/services.model').Service;
 
 const bcrypt = require('bcrypt');
 const signToken = require('../../../../utils/auth/jwt/sign');
@@ -240,6 +241,11 @@ const register = async (req, res) => {
         getUser.password = await bcrypt.hash(password, 10);
         getUser.isRegistered = true;
         getUser.save();
+
+        const newService = new Service({
+            email: email
+        });
+        await newService.save();
 
         const userTokenSign = {
             email: email,
