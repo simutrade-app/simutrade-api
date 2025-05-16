@@ -12,23 +12,7 @@ const bucket = r2.bucket(process.env.R2_BUCKET);
 bucket.provideBucketPublicUrl(process.env.R2_PUBLIC_URL);
 
 const uploadPDF = async (file, directory) => {
-    if (file.mimetype != "application/pdf") {
-        throw {
-            "name": "MimeTypeNotAllowed",
-            "message": `Mimetype ${file.mimetype} is not allowed`
-        };
-    }
-
-    const fileExtension = path.extname(file.originalname);
-    const allowedExtension = ['.pdf'];
-
-    if (!allowedExtension.includes(fileExtension)) {
-        throw {
-            "name": "ExtensionNotAllowed",
-            "message": `Extension ${fileExtension} is not allowed`
-        };
-    }
-    const upload = await bucket.uploadFile(file.path, directory, undefined, 'application/pdf');
+    const upload = await bucket.uploadFile(file, directory, undefined, 'application/pdf');
     return upload.publicUrls[0];
 };
 
