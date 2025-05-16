@@ -470,13 +470,9 @@ paths:
                           example: >
                             This trend is evident in the smartphone sector, with the 
                             market for new smartphones falling by 3.2% in 2023. In contrast, International Data Corporation (IDC) . . .
-                      chatID:
+                      _id:
                         type: string
                         example: 6825a3b873df27baac13fa00
-                      createdAt:
-                        type: string
-                        format: date-time
-                        example: "2025-05-16T09:37:05.938Z"
   /service/rag-chat/read:
     get:
       tags:
@@ -567,7 +563,7 @@ paths:
                             _id:
                               type: string
                               example: 6825a2bd8725dce9203daa36
-                            createdAt:
+                            createdTime:
                               type: string
                               format: date-time
                               example: "2025-05-16T09:37:05.938Z"
@@ -664,7 +660,7 @@ paths:
                       _id:
                         type: string
                         example: 6825a2bd8725dce9203daa36
-                      createdAt:
+                      createdTime:
                         type: string
                         format: date-time
                         example: "2025-05-16T09:37:05.938Z"
@@ -766,7 +762,7 @@ paths:
                             rather than deficit ones is that adjustment
                             towards more consumption in the former
                             is less deflationary for the world economy . . .
-                      createdAt:
+                      createdTime:
                         type: string
                         format: date-time
                         example: "2025-05-16T09:37:05.938Z"
@@ -857,6 +853,149 @@ paths:
                             _id:
                               type: string
                               example: 68270a18bad2faaf07ae79d4
+  /service/ai-agent/vertex:
+    post:
+      tags:
+        - service/ai-agent
+      summary: Create a custom AI agent chat using Vertex Google AI studio
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  example: What are the major trade trends in 2023?
+      responses:
+        '200':
+          description: Successfully created chat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfuly create user chat
+                  data:
+                    type: object
+                    properties:
+                      query:
+                        type: string
+                        example: What are the major trade trends in 2023?
+                      response:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            videoMetadata:
+                              type: string
+                              nullable: true
+                              example: null
+                            thought:
+                              type: string
+                              nullable: true
+                              example: null
+                            inlineData:
+                              type: string
+                              nullable: true
+                              example: null
+                            codeExecutionResult:
+                              type: string
+                              nullable: true
+                              example: null
+                            executableCode:
+                              type: string
+                              nullable: true
+                              example: null
+                            fileData:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionCall:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionResponse:
+                              type: string
+                              nullable: true
+                              example: null
+                            text:
+                              type: string
+                              example: >
+                                Based on my augmented trade knowledge, here are some of the major trade trends observed in 2023:
+                                
+                                - Increased Trade in Used Goods: ...
+                      grounding_metadata:
+                        type: string
+                        nullable: true
+                        example: null
+                      context_used:
+                        type: array
+                        items:
+                          type: string
+                          example: >
+                            This trend is evident in the smartphone sector, with the 
+                            market for new smartphones falling by 3.2% in 2023. In contrast, International Data Corporation (IDC) . . .
+  /service/ai-agent/openrouter:
+    post:
+      tags:
+        - service/ai-agent
+      summary: Create a custom AI agent chat using openrouter.ai
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+                - model
+              properties:
+                query:
+                  type: string
+                  example: What are the major trade trends in 2023?
+                model:
+                  type: string
+                  example: gemma-3-27b-it:free
+                  enum:
+                    - google/gemma-2-9b-it:free
+                    - gemma-3-1b-it:free
+                    - gemma-3-4b-it:free
+                    - gemma-3-12b-it:free
+                    - gemma-3-27b-it:free
+                    - gemini-2.0-flash-exp:free
+      responses:
+        '200':
+          description: Successfully created chat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfully created user chat
+                  data:
+                    type: object
+                    properties:
+                      answer:
+                        type: string
+                        example: The major global trade trends in 2023 are...
 components:
   securitySchemes:
     bearerAuth:
