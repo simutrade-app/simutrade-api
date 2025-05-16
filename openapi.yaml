@@ -473,6 +473,10 @@ paths:
                       chatID:
                         type: string
                         example: 6825a3b873df27baac13fa00
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-05-16T09:37:05.938Z"
   /service/rag-chat/read:
     get:
       tags:
@@ -563,6 +567,10 @@ paths:
                             _id:
                               type: string
                               example: 6825a2bd8725dce9203daa36
+                            createdAt:
+                              type: string
+                              format: date-time
+                              example: "2025-05-16T09:37:05.938Z"
   /service/rag-chat/read/{id}:
     get:
       tags:
@@ -656,6 +664,199 @@ paths:
                       _id:
                         type: string
                         example: 6825a2bd8725dce9203daa36
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-05-16T09:37:05.938Z"
+  /service/rag-chat/update:
+    put:
+      tags:
+        - service/rag-chat
+      summary: Reply chat with user query
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The chat ID to reply
+                  example: "6826f7c8824a7fee3daba087"
+                query:
+                  type: string
+                  description: User's query or response to be added
+                  example: "But is it limited because of production deficit?"
+              required:
+                - id
+                - query
+      responses:
+        '200':
+          description: Successfully updated chat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfuly update user chat
+                  data:
+                    type: object
+                    properties:
+                      query:
+                        type: string
+                        example: "But is it limited because of production deficit?"
+                      response:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            videoMetadata:
+                              type: string
+                              nullable: true
+                              example: null
+                            thought:
+                              type: string
+                              nullable: true
+                              example: null
+                            inlineData:
+                              type: string
+                              nullable: true
+                              example: null
+                            codeExecutionResult:
+                              type: string
+                              nullable: true
+                              example: null
+                            executableCode:
+                              type: string
+                              nullable: true
+                              example: null
+                            fileData:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionCall:
+                              type: string
+                              nullable: true
+                              example: null
+                            functionResponse:
+                              type: string
+                              nullable: true
+                              example: null
+                            text:
+                              type: string
+                              example: >
+                                Indonesia's crude oil export opportunities to European markets may face limitations...
+                      grounding_metadata:
+                        type: string
+                        nullable: true
+                        example: null
+                      context_used:
+                        type: array
+                        items:
+                          type: string
+                          example: > 
+                            rather than deficit ones is that adjustment
+                            towards more consumption in the former
+                            is less deflationary for the world economy . . .
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-05-16T09:37:05.938Z"
+  /service/pdf-report/create:
+    post:
+      tags:
+        - service/pdf-report
+      summary: Create a PDF report from chat
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatId:
+                  type: string
+                  description: The ID of the chat to generate the PDF from
+                  example: "682703d12957e0d33063327f"
+              required:
+                - chatId
+      responses:
+        '200':
+          description: PDF created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfuly create pdf from chat
+                  data:
+                    type: object
+                    properties:
+                      pdfID:
+                        type: string
+                        example: 68270a18bad2faaf07ae79d4
+                      pdfURL:
+                        type: string
+                        format: uri
+                        example: https://cdn.simutrade.app/pdf/68270a18bad2faaf07ae79d4.pdf
+  /service/pdf-report/read:
+    get:
+      tags:
+        - service/pdf-report
+      summary: Read all PDF reports for the user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully retrieved user PDF reports
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Successfuly read all user pdf
+                  data:
+                    type: object
+                    properties:
+                      chatData:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            pdfURL:
+                              type: string
+                              format: uri
+                              example: https://cdn.simutrade.app/pdf/68270a18bad2faaf07ae79d4.pdf
+                            chatId:
+                              type: string
+                              example: 682703d12957e0d33063327f
+                            createdAt:
+                              type: string
+                              format: date-time
+                              example: "2025-05-16T09:37:05.938Z"
+                            _id:
+                              type: string
+                              example: 68270a18bad2faaf07ae79d4
 components:
   securitySchemes:
     bearerAuth:

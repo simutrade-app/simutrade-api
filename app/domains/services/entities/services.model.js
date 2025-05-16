@@ -24,6 +24,14 @@ const serviceSchema = new mongoose.Schema({
         }]
     }],
     pdfGeneration: [{
+        pdfURL: { 
+            type: String, 
+            required: true, 
+            default: function() {
+                return `https://cdn.simutrade.app/pdf/${this._id}.pdf`;
+            }
+        },
+        chatId: { type: mongoose.Schema.Types.ObjectId, required: true },
         createdAt: { type: Date, required: true, default: new Date() }
     }]
 });

@@ -67,23 +67,18 @@ const create = async (req, res) => {
             });
         }
 
-        console.log("[*] OpenRouter: passed");
-
-        getService.pdfGeneration.push({ createdAt: new Date() });
+        getService.pdfGeneration.push({
+            chatId: chatId,
+            createdAt: new Date() 
+        });
         const newService = await getService.save();
         const pdfID = newService.pdfGeneration.slice(-1)[0]._id
-
-        console.log("[*] DB Add: passed, " + pdfID);
 
         const data = await response.json();
         const chatCompletetion = data.choices[0].message.content.replace("```latex", "").replace("```", "");
 
-        console.log("[*] chatCompletetion: " + chatCompletetion);
-
         fs.mkdirSync(tempDir, { recursive: true });
         fs.writeFileSync(path.join(tempDir, 'output.tex'), chatCompletetion);
-
-        console.log("[*] Write LaTeX: passed");
 
         const input = fs.createReadStream(path.join(tempDir, 'output.tex'));
         const output = fs.createWriteStream(path.join(tempDir, `${pdfID}.pdf`))
@@ -94,17 +89,14 @@ const create = async (req, res) => {
             pdf.on('finish', resolve);
         });
 
-        console.log("[*] Generate PDF: passed");
-
         const pdfURL = await uploadPDF(path.join(tempDir, `${pdfID}.pdf`), `pdf/${pdfID}.pdf`);
-
-        console.log("[*] Uplaod PDF: passed");
 
         return res.status(200).json({
             status: 'success',
-            message: "Successfuly create user chat",
+            message: "Successfuly create user pdf from user chat",
             data: {
-                pdf: pdfURL
+                pdfID: pdfID
+                pdfURL: pdfURL
             }
         });
     } catch(err) {
@@ -130,7 +122,7 @@ const read = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            message: "Successfuly read all user chat",
+            message: "Successfuly read all user pdf",
             data: {
                 chatData: getService.pdfGeneration
             }
