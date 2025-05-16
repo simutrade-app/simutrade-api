@@ -95,7 +95,7 @@ const create = async (req, res) => {
             status: 'success',
             message: "Successfuly create user pdf from user chat",
             data: {
-                pdfID: pdfID
+                pdfID: pdfID,
                 pdfURL: pdfURL
             }
         });
