@@ -1,0 +1,144 @@
+const Service = require('../entities/services.model').Service;
+const uploadPDF = require('../../../configs/storage/cloudfalre-r2/s3.client');
+
+const latex = require('node-latex');
+const fs = require('fs');
+const path = require('path');
+
+const tempDir = path.join(__dirname, 'temp');
+
+const create = async (req, res) => {
+    try {
+        const { chatId } = req.body;
+
+        const getService = await Service.findOne({ email: req.user.email });
+        if (!getService) {
+            return res.status(400).json({
+                status: 'error',
+                message: "User is not registered yet",
+                data: {}
+            });
+        }
+
+        const chatData = await Service.findOne(
+            { email: req.user.email, "chatData._id": chatId },
+            { "chatData.$": 1 }
+        );
+        if (!chatData) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Invalid chatId: chatId not found',
+                data: {}
+            });
+        }
+
+        let ragChat = chatData["chatData"][0].toObject()["response"][0]["text"];
+
+        const requestBody = {
+            model: "google/gemma-3-27b-it:free",
+            messages: [{ role: 'user', content: ragChat + "\n\nBased on data above, create a latex document explaining the facts. Output only the latex file format." }],
+        };
+
+        const response = await fetch(process.env.OPENROUTER_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                'HTTP-Referer': 'https://api.simutrade.app',
+                'X-Title': 'SimuTrade AI Supply Chain Simulation',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error(errorData);
+            return res.status(400).json({
+                status: 'error',
+                message: process.env.DEBUG ? errorData.error.message : "Failed to process request",
+                data: errorData.error
+            });
+        }
+
+        console.log("[*] OpenRouter: passed");
+
+        getService.pdfGeneration.push({ createdAt: new Date() });
+        const newService = await getService.save();
+        const pdfID = newService.pdfGeneration.slice(-1)[0]._id
+
+        console.log("[*] DB Add: passed, " + pdfID);
+
+        const data = await response.json();
+        const chatCompletetion = data.choices[0].message.content.replace("```latex", "").replace("```", "");
+
+        console.log("[*] chatCompletetion: " + chatCompletetion);
+
+        fs.mkdirSync(tempDir, { recursive: true });
+        fs.writeFileSync(path.join(tempDir, 'output.tex'), chatCompletetion);
+
+        console.log("[*] Write LaTeX: passed");
+
+        const input = fs.createReadStream(path.join(tempDir, 'output.tex'));
+        const output = fs.createWriteStream(path.join(tempDir, `${pdfID}.pdf`))
+        const pdf = latex(input)
+        await new Promise((resolve, reject) => {
+            pdf.pipe(output);
+            pdf.on('error', reject);
+            pdf.on('finish', resolve);
+        });
+
+        console.log("[*] Generate PDF: passed");
+
+        const pdfURL = await uploadPDF(path.join(tempDir, `${pdfID}.pdf`), `pdf/${pdfID}.pdf`);
+
+        console.log("[*] Uplaod PDF: passed");
+
+        return res.status(200).json({
+            status: 'success',
+            message: "Successfuly create user chat",
+            data: {
+                pdf: pdfURL
+            }
+        });
+    } catch(err) {
+        console.error(err);
+        return res.status(400).json({
+            status: 'error',
+            message: process.env.DEBUG ? err.message : "Bad Request",
+            data: {}
+        });
+    }
+};
+
+const read = async (req, res) => {
+    try {
+        const getService = await Service.findOne({ email: req.user.email });
+        if (!getService) {
+            return res.status(400).json({
+                status: 'error',
+                message: "User is not registered yet",
+                data: {}
+            });
+        }
+
+        res.status(200).json({
+            status: "success",
+            message: "Successfuly read all user chat",
+            data: {
+                chatData: getService.pdfGeneration
+            }
+        });
+    } catch(err) {
+        console.error(err);
+        return res.status(400).json({
+            status: 'error',
+            message: process.env.DEBUG ? err.message : "Bad Request",
+            data: {}
+        });
+    }
+};
+
+module.exports = {
+    create,
+    read
+};

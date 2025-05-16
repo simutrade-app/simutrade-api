@@ -23,6 +23,7 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+.docker_env
 
 # Next.js build output
 .next/
@@ -72,3 +73,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# SimuTrade PDF Generation
+app/domains/services/report/temp/
