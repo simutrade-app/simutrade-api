@@ -21,8 +21,8 @@ const create = async (req, res) => {
         }
 
         const chatData = await Service.findOne(
-            { email: req.user.email, "chatData._id": chatId },
-            { "chatData.$": 1 }
+            { email: req.user.email, "chatSession._id": chatId },
+            { "chatSession.$": 1 }
         );
         if (!chatData) {
             return res.status(400).json({
@@ -32,11 +32,18 @@ const create = async (req, res) => {
             });
         }
 
-        let ragChat = chatData["chatData"][0].toObject()["response"][0]["text"];
+        let chatSession = chatData["chatSession"][0].toObject()["chatData"];
+
+        let chatRequest = "Here is the previous chat between our customer and AI asstant:\n";
+
+        for (chat of chatSession) {
+            chatRequest += `user: ${chat["query"]}\n`;
+            chatRequest += `user: ${chat["response"][0]["text"]}\n`;
+        }
 
         const requestBody = {
             model: "google/gemma-3-27b-it:free",
-            messages: [{ role: 'user', content: ragChat + "\n\nBased on data above, create a latex document explaining the facts. Output only the latex file format." }],
+            messages: [{ role: 'user', content: chatRequest + "\n\nBased on data above, create a latex document explaining the facts. Output only the latex file format." }],
         };
 
         const response = await fetch(process.env.OPENROUTER_API_URL, {

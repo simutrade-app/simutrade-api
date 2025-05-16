@@ -166,7 +166,7 @@ const update = async (req, res) => {
 
         for (chat of chatSession) {
             chatRequest += `user: ${chat["query"]}\n`;
-            chatRequest += `user: ${chat["response"]["text"]}\n`;
+            chatRequest += `user: ${chat["response"][0]["text"]}\n`;
         }
 
         chatRequest += `User added a reply: ${query}\n\nFollow up the user reply`;
