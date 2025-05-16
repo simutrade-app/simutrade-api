@@ -19,6 +19,7 @@ app.use(cors({
         'https://simutrade.app',
         'https://api.simutrade.app'
     ],
+    credentials: true
 }));
 app.use(session({
     secret: process.env.SESSION_SECRET,
