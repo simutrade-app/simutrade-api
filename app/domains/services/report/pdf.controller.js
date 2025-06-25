@@ -42,7 +42,7 @@ const create = async (req, res) => {
         }
 
         const requestBody = {
-            model: "google/gemma-3-27b-it:free",
+            model: process.env.OPENROUTER_PDFGEN_MODEL,
             messages: [{ role: 'user', content: chatRequest + "\n\nBased on data above, create a latex document explaining the facts. Output only the latex file format." }],
         };
 
