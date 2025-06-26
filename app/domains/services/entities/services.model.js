@@ -18,7 +18,10 @@ const serviceSchema = new mongoose.Schema({
                     text: { type: String, required: true },
                 }
             ],
-            grounding_metadata: { type: String, required: false },
+            grounding_metadata: {
+                renderedContent: { type: String, required: false },
+                sdkBlob: { type: String, required: false }
+            },
             context_used: [{ type: String, required: false }],
             createdTime: { type: Date, required: true, default: new Date() }
         }]
