@@ -44,6 +44,7 @@ const create = async (req, res) => {
         }
 
         let data = await response.json();
+        if (data["context_used"] == "") data["context_used"] = [];
         getService.chatSession.push({chatData: [data]});
         const chatId = await getService.save();
 
@@ -164,9 +165,11 @@ const update = async (req, res) => {
 
         let chatRequest = "Here is the previous chat between our customer and AI asstant:\n";
 
-        for (chat of chatSession) {
-            chatRequest += `user: ${chat["query"]}\n`;
-            chatRequest += `user: ${chat["response"][0]["text"]}\n`;
+        for (chats of chatSession) {
+            chatRequest += `user: ${chats["query"]}\n`;
+            for (replies of chats["response"]) {
+                chatRequest += `assistant: ${replies["text"]}\n`;
+            }
         }
 
         chatRequest += `User added a reply: ${query}\n\nFollow up the user reply`;
@@ -196,6 +199,7 @@ const update = async (req, res) => {
         let data = await response.json();
 
         data["query"] = query;
+        if (data["context_used"] == "") data["context_used"] = [];
 
         await Service.findOneAndUpdate(
             { 
