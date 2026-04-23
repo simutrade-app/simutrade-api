@@ -3,7 +3,7 @@
     <tr>
       <td align="center" style="padding: 20px;">
         <h3>📢 Domain & Email Migration Notice</h3>
-        <p>From <b>6 May 2026</b>, Simutrade will transition to new domains as <code>simutrade.app</code> will not be renewed:</p>
+        <p>From <b>May 6th, 2026</b>, Simutrade will transition to new domains as <code>simutrade.app</code> will not be renewed:</p>
         <p>🌐 <b>Website:</b> <a href="https://simutrade.faizath.com">simutrade.faizath.com</a> (formerly <i>simutrade.app</i>)<br>
         ⚙️ <b>API:</b> <a href="https://simutrade-api.faizath.com">simutrade-api.faizath.com</a> (formerly <i>api.simutrade.app</i>)<br>
         📧 <b>Email:</b> <a href="mailto:contact@simutrade.faizath.com">contact@simutrade.faizath.com</a> (formerly <i>contact@simutrade.app</i>)<br>
