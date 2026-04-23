@@ -1,4 +1,21 @@
 <div align="center">
+  <table border="1">
+    <tr>
+      <td align="center" style="padding: 20px;">
+        <h3>📢 Domain & Email Migration Notice</h3>
+        <p>From <b>6 May 2026</b>, Simutrade will transition to new domains as <code>simutrade.app</code> will not be renewed:</p>
+        <p>🌐 <b>Website:</b> <a href="https://simutrade.faizath.com">simutrade.faizath.com</a> (formerly <i>simutrade.app</i>)<br>
+        ⚙️ <b>API:</b> <a href="https://simutrade-api.faizath.com">simutrade-api.faizath.com</a> (formerly <i>api.simutrade.app</i>)<br>
+        📧 <b>Email:</b> <a href="mailto:contact@simutrade.faizath.com">contact@simutrade.faizath.com</a> (formerly <i>contact@simutrade.app</i>)<br>
+        🛰️ <b>CDN:</b> <a>simutrade-cdn.faizath.com</a> (formerly <i>cdn.simutrade.app</i>)<br>
+        📈 <b>Status Pages:</b> <a href="https://status.faizath.com/status/simutrade">https://status.faizath.com/status/simutrade</a> (formerly <i>status.simutrade.app</i>)
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div align="center">
   <img src="assets/logo.png" alt="SimuTrade Logo" width="100%"/>
   <h1 align="center">🚀 SimuTrade API</h1>
   <h3 align="center">AI-Powered Trade Supply Chain Simulation Backend API</h3>
