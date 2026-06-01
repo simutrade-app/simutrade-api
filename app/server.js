@@ -16,8 +16,8 @@ app.use(cors({
         'http://localhost:8080',
         'http://localhost:4173',
         'http://localhost:5173',
-        'https://simutrade.app',
-        'https://api.simutrade.app'
+        'https://simutrade.faizath.com',
+        'https://simutrade-api.faizath.com'
     ],
     credentials: true
 }));
