@@ -17,7 +17,7 @@
 
 <div align="center">
   <img src="assets/logo.png" alt="Simutrade Logo" width="100%"/>
-  <h1 align="center">🚀 Simutrade Backend API</h1>
+  <h1 align="center">🚀 Simutrade Web Front-end</h1>
   <h3 align="center">AI-Powered Trade Supply Chain Simulation Platform</h3>
   
   <p align="center">
@@ -212,65 +212,75 @@ Simutrade is built as a modular, microservices-based architecture with three mai
 
 ## 🛠️ Tech Stacks
 
-### 🚀 Backend Framework & Core
+### 🎨 Frontend Framework & Core
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **Node.js** | Runtime | JavaScript runtime for server-side development |
-| **Express.js** | Web Framework | Fast, unopinionated web framework for Node.js |
-| **CommonJS** | Module System | Standard module system for Node.js applications |
+| **React 18** | UI Framework | Modern component-based architecture with hooks and concurrent features |
+| **TypeScript** | Type Safety | Static type checking for enhanced code quality and developer experience |
+| **Vite** | Build Tool | Lightning-fast development server and optimized production builds |
 
-### 🔐 Authentication & Security
+### 🎨 Styling & UI Components
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **JWT (jsonwebtoken)** | Authentication | JSON Web Token implementation for secure authentication |
-| **Passport.js** | Authentication Strategy | Authentication middleware for Node.js |
-| **Passport Google OAuth2** | OAuth Integration | Google OAuth2 strategy for Passport.js |
-| **bcrypt** | Password Hashing | Secure password hashing and verification |
-| **Express Session** | Session Management | Session middleware for Express applications |
+| **Tailwind CSS** | Styling | Utility-first CSS framework for rapid custom design development |
+| **Radix UI** | Components | Accessible, unstyled UI primitives for building design systems |
+| **Ant Design** | UI Library | Comprehensive React components with polished design resources |
+| **Lucide React** | Icons | Beautiful, consistent icon library for React applications |
+| **Font Awesome** | Icons | Popular scalable vector icons with React components |
 
-### 🗄️ Database & Data Management
+### 📊 Data Visualization & Maps
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **MongoDB** | Database | NoSQL document database for flexible data storage |
-| **Mongoose** | ODM | Elegant MongoDB object modeling for Node.js |
+| **Recharts** | Charts | Composable charting library built on React and D3 |
+| **Leaflet + React Leaflet** | Maps | Interactive maps with React bindings for geospatial visualization |
+| **React Resizable Panels** | Layout | Flexible draggable and resizable panel layouts |
 
-### 🌐 HTTP & API
+### 🔄 State Management & Data Fetching
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **Body Parser** | Request Parsing | Parse incoming request bodies in middleware |
-| **CORS** | Cross-Origin | Enable Cross-Origin Resource Sharing |
-| **Express** | Web Server | Web application framework for Node.js |
+| **React Query** | Server State | Powerful data fetching, caching, and synchronization |
+| **React Hook Form** | Forms | Performant form library with validation and state management |
+| **Zod** | Validation | TypeScript-first schema validation for data parsing |
 
-### ☁️ Cloud Services & Storage
+### 🌐 Networking & Real-time
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **Cloudflare R2** | Object Storage | S3-compatible object storage service |
-| **node-cloudflare-r2** | R2 Client | Node.js client for Cloudflare R2 storage |
+| **Axios** | HTTP Client | Promise-based HTTP client for API requests |
+| **Socket.IO Client** | Real-time | Bidirectional event-based communication for live updates |
 
-### 📧 Communication & Notifications
+### 🎭 Animation & Interactions
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **Nodemailer** | Email Service | Email sending library for Node.js applications |
-
-### 📄 Document Generation
-| Technology | Purpose | Description |
-|------------|---------|-------------|
-| **node-latex** | PDF Generation | LaTeX to PDF conversion for document generation |
+| **GSAP** | Animation | High-performance animation library for complex interactions |
+| **Embla Carousel** | Carousel | Lightweight, touch-friendly carousel component |
+| **React Day Picker** | Date Picker | Accessible date selection component |
 
 ### 🛠️ Development Tools
 | Technology | Purpose | Description |
 |------------|---------|-------------|
-| **Nodemon** | Development | Automatic server restart during development |
-| **dotenv** | Environment | Load environment variables from .env file |
+| **ESLint** | Code Quality | Static analysis tool for finding and fixing code issues |
+| **Prettier** | Code Formatting | Opinionated code formatter for consistent style |
+| **PostCSS** | CSS Processing | CSS transformation with JavaScript plugins |
+| **Jest** | Testing | JavaScript testing framework with React Testing Library |
+
+### 📦 Utility Libraries
+| Technology | Purpose | Description |
+|------------|---------|-------------|
+| **date-fns** | Date Manipulation | Lightweight library for modern date operations |
+| **React Markdown** | Content | Markdown rendering component for rich text content |
+| **Sonner** | Notifications | Minimal toast notification library with animations |
+| **Vaul** | Modals | Accessible modal component with better ergonomics |
+| **clsx** | Styling | Utility for conditionally joining classNames |
+| **React Router DOM** | Routing | Standard routing library for React navigation |
 
 ## ⚙️ Installation & Setup
 
 ### 🚀 Quick Start
 
-1. **Clone the API Repository**
+1. **Clone the Frontend Repository**
    ```bash
-   git clone https://github.com/simutrade-app/simutrade-api.git
-   cd simutrade-api
+   git clone https://github.com/simutrade-app/simutrade-fe.git
+   cd simutrade-fe
    ```
 
 2. **Install Dependencies**
@@ -278,42 +288,39 @@ Simutrade is built as a modular, microservices-based architecture with three mai
    npm install
    ```
 
-3. **Environment Configuration**
-   ```bash
-   cp template.env .env
-   # Edit .env with your configuration
-   ```
-
-4. **Start Development Server**
+3. **Start Development Server**
    ```bash
    npm run dev
    ```
 
-5. **Start Production Server**
-   ```bash
-   npm start
-   ```
+4. **Open in Browser**
+   Navigate to `http://localhost:5173` to view the application.
 
 ### 📋 Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm start` | Start production server |
-| `npm run dev` | Start development server with auto-restart |
-| `npm install` | Install all dependencies |
+| `npm run dev` | Start development server with hot reload |
+| `npm run build` | Build production-ready application |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint for code quality checks |
+| `npm run lint:fix` | Auto-fix ESLint issues |
+| `npm run format` | Format code with Prettier |
+| `npm run test` | Run Jest test suite |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Generate test coverage report |
 
 ### 🔧 Development Requirements
 
 - **Node.js**: Version 18 or higher
 - **npm**: Version 8 or higher
-- **MongoDB**: Database server for data storage
-- **Environment Variables**: Configure `.env` file with required settings
+- **Modern Browser**: Chrome, Firefox, Safari, or Edge with ES6+ support
 
 ### 🌐 Production Deployment
 
-The API is automatically deployed to [api.simutrade.app](https://api.simutrade.app) using modern CI/CD pipelines with:
+The application is automatically deployed to [simutrade.app](https://simutrade.app) using modern CI/CD pipelines with:
+- **Frontend**: Cloudflare Pages deployment
 - **API Backend**: [api.simutrade.app](https://api.simutrade.app)
-- **Frontend**: [simutrade.app](https://simutrade.app)
 - **AI Services**: Integrated with the main platform
 
 ### 📊 System Status
@@ -351,24 +358,25 @@ We welcome contributions from the community! Here's how you can help:
 7. Open a Pull Request
 
 ### 📋 Code Standards
-- Follow Node.js and Express.js best practices
-- Use proper error handling and logging
+- Follow TypeScript best practices
+- Use ESLint and Prettier for code formatting
 - Write comprehensive tests for new features
-- Update API documentation as needed
+- Update documentation as needed
 
 ## 🏆 Acknowledgments
 
-- **Node.js Team** for the amazing runtime
-- **Express.js Team** for the robust web framework
-- **MongoDB Team** for the flexible database solution
+- **React Team** for the amazing framework
+- **Vite Team** for the lightning-fast build tool
+- **Tailwind CSS** for the utility-first CSS framework
+- **Radix UI** for accessible component primitives
 - **All Contributors** who help make SimuTrade better
 
 ## 📞 Support & Contact
 
 - **Website**: [simutrade.app](https://simutrade.app)
 - **API Documentation**: [api.simutrade.app](https://api.simutrade.app)
-- **Issues**: [GitHub Issues](https://github.com/simutrade-app/simutrade-api/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/simutrade-app/simutrade-api/discussions)
+- **Issues**: [GitHub Issues](https://github.com/simutrade-app/simutrade-fe/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/simutrade-app/simutrade-fe/discussions)
 
 ## 📝 License
 
@@ -381,6 +389,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
   <p>
     <a href="https://simutrade.app">🌐 Visit SimuTrade</a> •
     <a href="https://github.com/simutrade-app">👥 Our Organization</a> •
-    <a href="https://github.com/simutrade-app/simutrade-api/stargazers">⭐ Star this repo</a>
+    <a href="https://github.com/simutrade-app/simutrade-fe/stargazers">⭐ Star this repo</a>
   </p>
 </div>
